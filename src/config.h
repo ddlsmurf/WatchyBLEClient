@@ -15,6 +15,7 @@
 #define ANCS_NOTIFICATION_DELAY_MS 10000
 // Delay before screen updates
 #define SCREEN_UPDATE_DEBOUNCE_PERIOD_MS 200
+#define CTS_UPDATE_PERIOD_MS 29000
 
 typedef GxEPD2_BW<GxEPD2_154_D67, GxEPD2_154_D67::HEIGHT> display_t;
 

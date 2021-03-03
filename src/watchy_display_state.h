@@ -43,6 +43,10 @@ private:
   std::string amsTrackAlbum = "";
   std::string amsTrackTitle = "";
 
+  // CTS state
+  std::string ctsTime = "";
+  uint32_t ctsLastUpdate = 0;
+
   bool amsIsCommandAvailable(AMSRemoteCommandID_t cmd)
   {
     return notifications.clientAMS && notifications.clientAMS->isCommandAvailable(cmd);
@@ -134,6 +138,7 @@ private:
     std::string text = amsCheckIsEmpty() ? "Please start playing something on your phone"
                                          : amsTrackTitle + "\n" + amsTrackArtist;
     alignText(&FONT_BIG, text.c_str(), ALIGN_NEAR, ALIGN_MIDDLE);
+    alignText(&FONT_BIG, ctsTime.c_str(), ALIGN_MIDDLE, ALIGN_FAR);
   }
 
 public:
@@ -248,9 +253,30 @@ public:
     invalidate();
   }
 
+  void checkCTSUpdateTimeout()
+  {
+      if (!bleConnected || !notifications.clientCTS->ready()) return;
+      uint32_t now = millis();
+      if ((now - ctsLastUpdate) > CTS_UPDATE_PERIOD_MS || (now < ctsLastUpdate) || !ctsLastUpdate) {
+          ctsLastUpdate = now;
+          ble_cts_current_time_char_t *time = notifications.clientCTS->readTime();
+          if (time) {
+              const char *dayNames[] = { "sun", "mon", "tue", "wed", "thu", "fri", "sat"};
+              char buffer[20] = {};
+              std::string hours = itoa(time->exact_time_256.hours, buffer, 10);
+              std::string minutes = itoa(time->exact_time_256.minutes, buffer, 10);
+              std::string day = itoa(time->exact_time_256.day, buffer, 10);
+              std::string dayOfWeek = dayNames[time->exact_time_256.day_of_week];
+              ctsTime = dayOfWeek + " " + day + " - " + hours + ":" + minutes;
+              invalidate();
+          }
+      }
+  }
+
   void updateIfNeeded()
   {
     checkANCSNotificationTimeout();
+    checkCTSUpdateTimeout();
     if (!needsUpdate)
       return;
     uint32_t now = millis();
