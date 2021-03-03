@@ -1,0 +1,24 @@
+// #include "watchy_hw.h"
+
+#ifndef WATCHY_PINS_H__
+#define WATCHY_PINS_H__
+
+#define WATCHY_BUTTON_1_PIN 26
+#define WATCHY_BUTTON_2_PIN 25
+#define WATCHY_BUTTON_3_PIN 32
+#define WATCHY_BUTTON_4_PIN  4
+
+#define WATCHY_DISPLAY_CS_PIN     5
+#define WATCHY_DISPLAY_DC_PIN    10
+#define WATCHY_DISPLAY_RESET_PIN  9
+#define WATCHY_DISPLAY_BUSY_PIN  19
+
+#define WATCHY_DISPLAY_WIDTH    200
+#define WATCHY_DISPLAY_HEIGHT   200
+
+#define WATCHY_VIB_MOTOR_PIN 13
+#define WATCHY_ADC_PIN 33
+#define WATCHY_RTC_PIN 27
+#define WATCHY_ACC_INT_PIN 14
+
+#endif // WATCHY_PINS_H__
