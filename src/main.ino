@@ -122,6 +122,6 @@ void loop()
     if (buttonWasPressed(presses, i))
       ESP_LOGI(LOG_TAG, "Button %d press", i + 1);
   displayState.handleButtonPress(presses);
-  delay(50);
   displayState.updateIfNeeded();
+  delay(50);
 }

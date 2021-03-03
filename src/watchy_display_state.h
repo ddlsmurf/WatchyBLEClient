@@ -135,7 +135,7 @@ private:
     if (amsPlayerName.length() > 0)
       alignText(&FONT_SMALL, amsPlayerName.c_str(), ALIGN_MIDDLE, ALIGN_NEAR);
     drawScreenAMSMediaStateVolumeBar();
-    std::string text = amsCheckIsEmpty() ? "Please start playing something on your phone"
+    std::string text = amsCheckIsEmpty() ? "Please start playing\nsomething on your\nphone"
                                          : amsTrackTitle + "\n" + amsTrackArtist;
     alignText(&FONT_BIG, text.c_str(), ALIGN_NEAR, ALIGN_MIDDLE);
     alignText(&FONT_BIG, ctsTime.c_str(), ALIGN_MIDDLE, ALIGN_FAR);
@@ -261,7 +261,7 @@ public:
           ctsLastUpdate = now;
           ble_cts_current_time_char_t *time = notifications.clientCTS->readTime();
           if (time) {
-              const char *dayNames[] = { "sun", "mon", "tue", "wed", "thu", "fri", "sat"};
+              const char *dayNames[] = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
               char buffer[20] = {};
               std::string hours = itoa(time->exact_time_256.hours, buffer, 10);
               std::string minutes = itoa(time->exact_time_256.minutes, buffer, 10);
