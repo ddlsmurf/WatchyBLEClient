@@ -267,7 +267,12 @@ public:
               std::string minutes = itoa(time->exact_time_256.minutes, buffer, 10);
               std::string day = itoa(time->exact_time_256.day, buffer, 10);
               std::string dayOfWeek = dayNames[time->exact_time_256.day_of_week];
-              ctsTime = dayOfWeek + " " + day + " - " + hours + ":" + minutes;
+              std::string newTime = dayOfWeek + " " + day +
+                (hours.length() == 2 ? " - " : " - 0") + hours +
+                (minutes.length() == 2 ? ":" : ":0") + minutes;
+              if (newTime.compare(ctsTime) == 0)
+                return;
+              ctsTime = newTime;
               invalidate();
           }
       }
